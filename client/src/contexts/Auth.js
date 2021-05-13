@@ -29,13 +29,14 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         let isMounted = true;
+
         const unsubscribe = auth.onAuthStateChanged(user => {
             isMounted && setCurrentUser(user);
             isMounted && setLoading(false);
         })
 
         return () => {
-            isMounted = false; 
+            isMounted = false;
             unsubscribe();
         }
     }, [])
@@ -48,9 +49,8 @@ export function AuthProvider({ children }) {
         logout,
     }
 
-    return (
-        <AuthContext.Provider value={context}>
-            {!loading && children}
-        </AuthContext.Provider>
+    return ( <
+        AuthContext.Provider value = { context } > {!loading && children } <
+        /AuthContext.Provider>
     )
 }

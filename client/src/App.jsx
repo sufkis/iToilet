@@ -1,39 +1,35 @@
-import { useRef, useState } from 'react';
 import './App.css';
 import Signup from './components/signup';
-import { useAuth } from "./contexts/Auth"
+import { AuthProvider } from "./contexts/Auth"
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const emailRef = useRef('');
-  const passwordRef = useRef('');
-  const  { signup, currentUser, googleSignIn } = useAuth(); //also can deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
+
+// useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
   // currentUser is null if no one is logged in, and signup also logs you in.
 
-  const handleSignUpClick = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      // all functions from useAuth() return a promise and should always be in a try & catch.
-      await signup(emailRef.current.value, passwordRef.current.value);
-      console.log(currentUser);
-    }
-    catch (err) {
-      setError('Failed to create account');
-      console.error(err);
-    }
-    finally {
-      setLoading(false);
-    }
+  const AppRouter = () => {
+
+    return (
+      <Router>
+        <Switch>
+          <Route exact path='/signup'>
+            <Signup />
+          </Route>
+          <Route exact path='/'>
+            {/* Map Component here */}
+          </Route>
+        </Switch>
+      </Router>
+    )
   }
 
-
   return (
-    <div className="App">
-
-      <Signup />
-      </div>
+    <>
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+    </>
   );
 }
 

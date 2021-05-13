@@ -29,8 +29,8 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         let isMounted = true;
-
         const unsubscribe = auth.onAuthStateChanged(user => {
+            console.log(user);
             isMounted && setCurrentUser(user);
             isMounted && setLoading(false);
         })

@@ -1,11 +1,21 @@
 import { ErrorMessage, Formik, Field, Form } from 'formik'
 import {  useAuth } from "../contexts/Auth"
-import * as firebaseui from 'firebaseui'
+import { useHistory } from 'react-router-dom';
 
 
 const Signup = () => {
-    const  { signup, currentUser, googleSignIn } = useAuth();
+    const  { signup, googleSignIn } = useAuth();
+    const history = useHistory();
 
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn()
+            history.push('/');
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return(
         <>
@@ -32,7 +42,8 @@ const Signup = () => {
         onSubmit={ async (values, { setSubmitting }) => {
             setSubmitting(true)
             try {
-                await signup(values.email, values.password)
+                await signup(values.email, values.password);
+                history.push('/');
 
             } catch(err) {
                 console.error(err)
@@ -59,16 +70,21 @@ const Signup = () => {
             <label htmlFor="confirmPassword">Password confirmation: </label>
             <Field type="text" name="confirmPassword" className="form-control" />
             <ErrorMessage name="confirmPassword" component="div" />
-            <div>
+            <div className="d-flex justify-content-center mt-2">
                 <button type="submit" disabled={isSubmitting} className="btn btn-primary">Submit</button>
             </div>
+            <div className="d-flex justify-content-center" >Or</div>
             </Form>
-            <button onClick={googleSignIn()}>Sign up with google</button>
+            <div className="d-flex justify-content-center mt-2">
+                <button className="btn btn-danger" type="submit" onClick={handleGoogleSignIn}>Sign In with Google account</button>
+            </div>
             </div>
 
             )
         }}
         </Formik>
+
+
         </>
     )
 }

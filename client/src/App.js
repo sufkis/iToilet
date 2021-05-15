@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import './App.css';
 import { useAuth } from "./contexts/Auth"
+import Map from "./Map";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div className="App">
+      <Map/>
       {/* Feel free to delete this and make it better.
       I'm leaving it here to give you an example of how it works and for testing. */}
       <h1>Sign up testing</h1> 

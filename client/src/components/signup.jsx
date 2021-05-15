@@ -79,7 +79,6 @@ const Signup = () => {
                 <button className="btn btn-danger" type="submit" onClick={handleGoogleSignIn}>Sign In with Google account</button>
             </div>
             </div>
-
             )
         }}
         </Formik>

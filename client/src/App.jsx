@@ -3,6 +3,7 @@ import Signup from './components/signup';
 import { AuthProvider } from "./contexts/Auth"
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ListView from './components/listView';
+import { useEffect, useState } from 'react';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -18,13 +19,27 @@ const mockToilet = [
   {lat: 32.053360328714675, lng: 34.75639650165063, text: "Shaffa Bar" ,href: {toiletIcon}, isPublic: false},
 ]
 
-const myMockLocation = {lat: 32.06342, lng: 34.773181 }
+// const myMockLocation = {lat: 32.06342, lng: 34.773181 }
 function App() {
 
 // useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
   // currentUser is null if no one is logged in, and signup also logs you in.
 
+  const [position, setPosition] = useState({});
+  const getPosition = (position) => {
+    setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
+  }
 
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getPosition);
+      }
+    }
+    return () => isMounted=false;
+  }, [])
 
   const AppRouter = () => {
 
@@ -35,10 +50,11 @@ function App() {
             <Signup />
           </Route>
           <Route exact path='/'>
+            <div>something happens here</div>
             {/* Map Component here */}
           </Route>
           <Route exact path='/list'>
-            <ListView toilets={mockToilet} userLocation={myMockLocation} />
+            <ListView toilets={mockToilet} userLocation={position} />
           </Route>
         </Switch>
       </Router>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import sortByDistance from 'sort-by-distance';
+import ListItem from './listItem';
 
 const ListView = ({ toilets, userLocation }) => {
 
@@ -20,10 +21,10 @@ const ListView = ({ toilets, userLocation }) => {
 
     return (
         <>
-        <ul className="list-group">
+        <ul className="card-group">
             {currentToilets.map((toilet, index) => {
                 return(
-                    <li className="list-group-item" key={index}>{toilet.text}</li>
+                    <ListItem key={toilet.id} toilet={toilet} />
                 )
             })}
         </ul>

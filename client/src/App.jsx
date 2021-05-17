@@ -1,6 +1,6 @@
 import './App.css';
 import Signup from './components/signup';
-import { AuthProvider } from "./contexts/Auth"
+import { AuthProvider, useAuth } from "./contexts/Auth"
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ListView from './components/listView';
 import { useEffect, useState } from 'react';
@@ -28,25 +28,14 @@ function App() {
 // useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
   // currentUser is null if no one is logged in, and signup also logs you in. 
 
-  const [coords, setCoords] = useState({lat: 0, lng: 0})
+  const { lat, lng } = useAuth();
+
+  const { getPosition, coords, setCoords } = useAuth();
+  const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
 
-  function getPosition () {
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-    console.log("Sorry, Geolocation is not supported by this browser.");
-    }
-}
 
-function showPosition (position) {
-    let lat = position.coords.latitude 
-    let lng = position.coords.longitude 
-    
-    setCoords({lat: lat, lng: lng});
-    console.log(coords)
-}
 
 
 
@@ -63,11 +52,11 @@ function showPosition (position) {
             <Login />
           </Route>
           <Route exact path='/'>
-            <LocationService setCoords={setCoords} setCity={setCity} setCountry={setCountry} city={city} country={country} getPosition={getPosition} />
+            <LocationService setStreet={setStreet} setCity={setCity} setCountry={setCountry} street={street} city={city} country={country} getPosition={getPosition} />
             <div>map at some point</div>
           </Route>
           <Route exact path='/list'>
-            <ListView toilets={mockToilet} userLocation={coords} />
+            <ListView toilets={mockToilet} />
           </Route>
         </Switch>
       </Router>

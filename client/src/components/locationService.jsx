@@ -1,23 +1,33 @@
+import { useAuth } from "../contexts/Auth";
 import { processManuelLocation } from "../lib/locationFunc";
 
 
 const LocationService = (props) => {
 
-    const { getPosition, setCity, setCountry, city, country , setCoords } = props
+    const { getPosition, street, setStreet, setCity, setCountry, city, country  } = props
+
+    const { setLng, setLat } = useAuth();
 
 
     const handleLocation = async (e) => {
         e.preventDefault();
         const result = await processManuelLocation(city, country);
-        setCoords(result.lan, result.lng)
+        setLng(result.lng);
+        setLat(result.lan)
     }
 
-    console.log(getPosition)
 
     return (
         <div>
             <button onClick={getPosition} className="btn btn-primary">Current Location</button>
             <form onSubmit={handleLocation}>
+                <label htmlFor="street">Street: </label>
+                <input
+                type="text"
+                name="street"
+                value={street}
+                onChange={e => setStreet(e.target.value)}
+                />
                 <label htmlFor="city">City: </label>
                 <input 
                 type="text"

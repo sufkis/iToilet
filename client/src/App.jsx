@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ListView from './components/listView';
 import { useEffect, useState } from 'react';
 import LocationService from './components/locationService';
+import AddToilet from './components/addToilet';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -41,7 +42,6 @@ function App() {
 function showPosition (position) {
     let lat = position.coords.latitude 
     let lng = position.coords.longitude 
-    
     setCoords({lat: lat, lng: lng});
     console.log(coords)
 }
@@ -62,6 +62,9 @@ function showPosition (position) {
           </Route>
           <Route exact path='/list'>
             <ListView toilets={mockToilet} userLocation={coords} />
+          </Route>
+          <Route exact path='/addToilet'>
+            <AddToilet />
           </Route>
         </Switch>
       </Router>

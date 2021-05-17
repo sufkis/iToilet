@@ -7,9 +7,8 @@ export async function processManuelLocation(userCity, userCountry) {
     if (userCountry !== "" && userCity !== "") {
         const city = userCity;
         const country = userCountry;
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city},+${country}&key=AIzaSyCfQfEo0boyriOF_SwxKA0mboSY3JWUWtw`
         try {
-            const results = await convertToGoogleCeooding(url)
+            const results = await convertToGoogleCeooding(city, country)
             if (results.status === "OK") {
                const result = getUserCoords(results.results)
                console.log(result)

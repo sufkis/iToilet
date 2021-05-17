@@ -4,6 +4,7 @@ import { AuthProvider } from "./contexts/Auth"
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ListView from './components/listView';
 import { useEffect, useState } from 'react';
+import LocationService from './components/locationService';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -25,21 +26,27 @@ function App() {
 // useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
   // currentUser is null if no one is logged in, and signup also logs you in.
 
-  const [position, setPosition] = useState({});
-  const getPosition = (position) => {
-    setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
-  }
+  const [coords, setCoords] = useState({lat: 0, lng: 0})
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
 
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(getPosition);
-      }
+  function getPosition () {
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+    console.log("Sorry, Geolocation is not supported by this browser.");
     }
-    return () => isMounted=false;
-  }, [])
+}
+
+function showPosition (position) {
+    let lat = position.coords.latitude 
+    let lng = position.coords.longitude 
+    
+    setCoords({lat: lat, lng: lng});
+    console.log(coords)
+}
+
+
 
   const AppRouter = () => {
 
@@ -50,10 +57,11 @@ function App() {
             <Signup />
           </Route>
           <Route exact path='/'>
+            <LocationService setCoords={setCoords} setCity={setCity} setCountry={setCountry} city={city} country={country} getPosition={getPosition} />
             <div>map at some point</div>
           </Route>
           <Route exact path='/list'>
-            <ListView toilets={mockToilet} userLocation={position} />
+            <ListView toilets={mockToilet} userLocation={coords} />
           </Route>
         </Switch>
       </Router>

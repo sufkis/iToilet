@@ -5,6 +5,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import ListView from './components/listView';
 import { useEffect, useState } from 'react';
 import LocationService from './components/locationService';
+import Login from './components/login';
+import Navigation from './components/navbar';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -24,7 +26,7 @@ const mockToilet = [
 function App() {
 
 // useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
-  // currentUser is null if no one is logged in, and signup also logs you in.
+  // currentUser is null if no one is logged in, and signup also logs you in. 
 
   const [coords, setCoords] = useState({lat: 0, lng: 0})
   const [city, setCity] = useState('');
@@ -52,9 +54,13 @@ function showPosition (position) {
 
     return (
       <Router>
+        <Navigation />
         <Switch>
           <Route exact path='/signup'>
             <Signup />
+          </Route>
+          <Route exact path='/login'>
+            <Login />
           </Route>
           <Route exact path='/'>
             <LocationService setCoords={setCoords} setCity={setCity} setCountry={setCountry} city={city} country={country} getPosition={getPosition} />

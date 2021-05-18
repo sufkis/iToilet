@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const BaseUrl = `http://127.0.0.1:5000/`
 
-// GOOGLE MAPS API FUNCTIONS
 
-export async function convertToGoogleCeooding(url) {
+export async function convertToGoogleCeooding(street, city, country) {
+
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${street},${city},+${country}&key=${process.env.REACT_APP_GOOGLE_KEY}`
+
     const response = await axios.get(url);
     return response.data;
 }

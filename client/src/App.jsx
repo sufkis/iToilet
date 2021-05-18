@@ -8,6 +8,7 @@ import LocationService from './components/locationService';
 import Login from './components/login';
 import Navigation from './components/navbar';
 import Map from './Map';
+import AddToilet from './components/addToilet';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -58,6 +59,9 @@ function App() {
           </Route>
           <Route exact path='/list'>
             <ListView toilets={mockToilet} />
+          </Route>
+          <Route exact path='/addToilet'>
+            <AddToilet />
           </Route>
         </Switch>
       </Router>

@@ -50,9 +50,9 @@ const Welcome = () => {
         <div className="container w-50">
             <div className="display-4">iToilet<i className="fas fa-toilet m-4"></i></div>
             <div>
-            <p className="text-info d-flex">Welcome to iToilet. Where dreams actually get true</p>
-            <p>Find your favorite toilet seat in the city for your private buissenss while supporting local buissenss!</p>
-            <p> Toilets are added by restaurnts or other providers and reviewd by you!</p>
+            <p className="text-info d-flex">Welcome to iToilet: When you gotta go - YOU GOTTA GO!</p>
+            <p>Find your favorite toilet seat in the city to handle your private buissenss while supporting a local buissenss!</p>
+            <p> Toilets are added by restaurnts or other providers and reviewd by the user.</p>
             </div>
             <div>
                 <div className="d-flex flex-column justify-content-center">

@@ -19,7 +19,8 @@ const Navigation = () => {
                         <Nav.Link href='/map'>Map</Nav.Link>
                         {currentUser && <Nav.Link href='/list'>List view</Nav.Link>}
                         {currentUser && <Nav.Link href='/profile'>Profile</Nav.Link>}
-                        {currentUser && <Button onClick={logout}>Logout</Button>}
+                        {currentUser && <Nav.Link href='/addToilet'>Add a toilet</Nav.Link>}
+                        {currentUser && <Button variant="outline-primary" onClick={logout}>Logout</Button>}
                         {!currentUser && <Nav.Link href='/'>Join!</Nav.Link>}
                     </Nav>
                 </Navbar.Collapse>

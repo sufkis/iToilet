@@ -6,14 +6,15 @@ const LocationService = (props) => {
 
     const { getPosition, street, setStreet, setCity, setCountry, city, country  } = props
 
-    const { setLng, setLat } = useAuth();
+    const { setLng, setLat, handleOnPosition } = useAuth();
 
 
     const handleLocation = async (e) => {
         e.preventDefault();
         const result = await processManuelLocation(city, country);
-        setLng(result.lng);
-        setLat(result.lan)
+
+        handleOnPosition(result.lat, result.lng)
+
     }
 
 

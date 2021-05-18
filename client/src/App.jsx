@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import LocationService from './components/locationService';
 import Login from './components/login';
 import Navigation from './components/navbar';
+import Map from './Map';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -28,8 +29,6 @@ function App() {
 // useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
   // currentUser is null if no one is logged in, and signup also logs you in. 
 
-  const { lat, lng } = useAuth();
-
   const { getPosition, coords, setCoords } = useAuth();
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -46,7 +45,7 @@ function App() {
         <Navigation />
         <Switch>
           <Route exact path='/signup'>
-            {/* <Signup /> */}
+            <Signup />
           </Route>
           <Route exact path='/login'>
             <Login />

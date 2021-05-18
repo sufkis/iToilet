@@ -15,7 +15,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
                         <Nav.Link href='/'>Find a spot</Nav.Link>
-                        <Nav.Link href='/'>Map</Nav.Link>
+                        <Nav.Link href='/map'>Map</Nav.Link>
                         <Nav.Link href='/list'>List view</Nav.Link>
                         {currentUser && <Nav.Link href='/profile'>Profile</Nav.Link>}
                         {currentUser && <Button onClick={logout}>Logout</Button>}

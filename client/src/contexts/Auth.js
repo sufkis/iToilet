@@ -55,7 +55,8 @@ export function AuthProvider({ children }) {
     }
 
     async function handleOnPosition(lat, lng) {
-        setCoords({ lat: lat, lng: lng })
+        console.log(lat, lng)
+        setCoords({ lat, lng })
         console.log(coords);
         await localForage.setItem('coords', coords)
     }
@@ -85,7 +86,7 @@ export function AuthProvider({ children }) {
     const context = {
         currentUser,
         coords,
-        setCoords,
+        handleOnPosition,
         getPosition,
         signup,
         googleSignIn,

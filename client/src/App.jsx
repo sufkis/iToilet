@@ -1,14 +1,15 @@
 import './App.css';
 import Signup from './components/signup';
-import { AuthProvider, useAuth } from "./contexts/Auth"
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import { useAuth } from "./contexts/Auth"
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import ListView from './components/listView';
-import { useEffect, useState } from 'react';
 import LocationService from './components/locationService';
 import Login from './components/login';
 import Navigation from './components/navbar';
 import Map from './Map';
 import AddToilet from './components/addToilet';
+import PrivateRoute from './components/privateRoute';
+import Welcome from './lib/welcome';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -27,52 +28,32 @@ const mockToilet = [
 // const myMockLocation = {lat: 32.06342, lng: 34.773181 }
 function App() {
 
-// useAuth to deconstruct: currentUser, googleSignIn, login, logout from useAuth() hook
-  // currentUser is null if no one is logged in, and signup also logs you in. 
+  const { currentUser } = useAuth();
 
-  const { getPosition, coords, setCoords } = useAuth();
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
-
-
-
-
-
-  const AppRouter = () => {
-
-    return (
-      <Router>
-        <Navigation />
-        <Switch>
-          <Route exact path='/signup'>
-            <Signup />
-          </Route>
-          <Route exact path='/login'>
-            <Login />
-          </Route>
-          <Route exact path='/'>
-            <LocationService setStreet={setStreet} setCity={setCity} setCountry={setCountry} street={street} city={city} country={country} getPosition={getPosition} />
-          </Route>
-          <Route exact path='/map'>
-            <Map toilets={mockToilet}/>
-          </Route>
-          <Route exact path='/list'>
-            <ListView toilets={mockToilet} />
-          </Route>
-          <Route exact path='/addToilet'>
-            <AddToilet />
-          </Route>
-        </Switch>
-      </Router>
-    )
-  }
 
   return (
     <>
-    <AuthProvider>
-      <AppRouter />
-    </AuthProvider>
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route exact path='/'>
+            {currentUser && <Redirect to='/main' />}
+            {!currentUser && <Welcome />}
+          </Route>
+          <PrivateRoute exact path='/main'>
+            <LocationService />
+          </PrivateRoute>
+          <PrivateRoute exact path='/map'>
+            <Map toilets={mockToilet}/>
+          </PrivateRoute>
+          <PrivateRoute exact path='/list'>
+            <ListView toilets={mockToilet} />
+          </PrivateRoute>
+          <PrivateRoute exact path='/addToilet'>
+            <AddToilet />
+          </PrivateRoute>
+        </Switch>
+      </Router>
     </>
   );
 }

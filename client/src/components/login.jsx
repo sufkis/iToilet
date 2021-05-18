@@ -5,26 +5,18 @@ import { useAuth } from "../contexts/Auth";
 
 const Login = () => {
 
-    const { login, googleSignIn } = useAuth();
+    const { login } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const history = useHistory();
 
-    async function handleGoogleSignIn () {
-        try {
-            await googleSignIn()
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             await login(email, password);
-            history.push('/')
+            history.push('/main')
         } catch(err) {
             console.error(err)
         }
@@ -45,7 +37,7 @@ const Login = () => {
                 <label htmlFor="email">Password: </label>
                 <input 
                 className="form-control mt-1"
-                type="email"
+                type="password"
                 value={password}
                 onChange={e=> setPassword(e.target.value)}
                 />
@@ -53,9 +45,6 @@ const Login = () => {
                     <button type="submit" className="btn btn-primary">Login</button>
                 </div>
             </form>
-            <div className="d-flex justify-content-center mt-2">
-                <button className="btn btn-danger" type="submit" onClick={handleGoogleSignIn}>Sign In with Google account</button>
-            </div>
         </div>
         </>
     )

@@ -14,6 +14,7 @@ const ListView = ({ toilets }) => {
         xName: 'lng'
     }
 
+    console.log( coords )
 
     useEffect(() => {
         let isMounted = true;
@@ -21,7 +22,7 @@ const ListView = ({ toilets }) => {
             setToilets(sortByDistance(coords, toilets, opts))
         }
         return () => isMounted=false;
-    }, [])
+    }, [coords])
 
     return (
         <>

@@ -30,8 +30,10 @@ export function AuthProvider({ children }) {
 
     async function logout() {
         setCoords({ lat: 0, lng: 0 })
-        await localForage.removeItem(coords)
-        return auth.signOut();
+        localForage.clear().then(() => {
+            return auth.signOut();
+
+        })
     }
 
 
@@ -58,7 +60,7 @@ export function AuthProvider({ children }) {
         console.log(lat, lng)
         setCoords({ lat, lng })
         console.log(coords);
-        await localForage.setItem('coords', coords)
+        await localForage.setItem('coords', { lat, lng })
     }
 
 

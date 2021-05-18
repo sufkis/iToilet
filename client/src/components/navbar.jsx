@@ -6,6 +6,7 @@ const Navigation = () => {
 
     const { logout, currentUser } = useAuth();
 
+    
     return(
         <>
         <Navbar collapseOnSelect fixed='sticky' expand='sm' bg='dark' variant='dark'>
@@ -14,13 +15,12 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
-                        <Nav.Link href='/'>Find a spot</Nav.Link>
+                        {currentUser && <Nav.Link href='/'>Find a spot</Nav.Link>}
                         <Nav.Link href='/map'>Map</Nav.Link>
-                        <Nav.Link href='/list'>List view</Nav.Link>
+                        {currentUser && <Nav.Link href='/list'>List view</Nav.Link>}
                         {currentUser && <Nav.Link href='/profile'>Profile</Nav.Link>}
                         {currentUser && <Button onClick={logout}>Logout</Button>}
-                        {!currentUser && <Nav.Link href='/signup'>Sign up</Nav.Link>}
-                        {!currentUser && <Nav.Link href='/login'>Login</Nav.Link>}
+                        {!currentUser && <Nav.Link href='/'>Join!</Nav.Link>}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

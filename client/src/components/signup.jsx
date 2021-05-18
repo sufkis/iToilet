@@ -65,10 +65,10 @@ const Signup = () => {
             <Field type="email" name="email" className="form-control" />
             <ErrorMessage name="email" component="div" />
             <label htmlFor="password">password</label>
-            <Field type="text" name="password" className="form-control" />
+            <Field type="password" name="password" className="form-control" />
             <ErrorMessage name="password" component="div" />
             <label htmlFor="confirmPassword">Password confirmation: </label>
-            <Field type="text" name="confirmPassword" className="form-control" />
+            <Field type="password" name="confirmPassword" className="form-control" />
             <ErrorMessage name="confirmPassword" component="div" />
             <div className="d-flex justify-content-center mt-2">
                 <button type="submit" disabled={isSubmitting} className="btn btn-primary">Submit</button>

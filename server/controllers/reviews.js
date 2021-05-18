@@ -11,7 +11,7 @@ module.exports = {
         }
         catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     },
 
@@ -23,7 +23,7 @@ module.exports = {
         }
         catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     },
 
@@ -34,7 +34,7 @@ module.exports = {
         }
         catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     },
 
@@ -45,7 +45,7 @@ module.exports = {
         }
         catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     },
 
@@ -55,7 +55,7 @@ module.exports = {
             res.send({ message: 'deleted successfully' });
         } catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     },
 
@@ -65,7 +65,7 @@ module.exports = {
             res.send({ message: 'deleted successfully' });
         } catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ message: err.message });
         }
     }
 }

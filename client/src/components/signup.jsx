@@ -8,7 +8,7 @@ const Signup = () => {
     const history = useHistory();
 
 
-    const handleGoogleSignIn = async () => {
+    async function handleGoogleSignIn () {
         try {
             await googleSignIn()
             history.push('/');

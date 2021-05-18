@@ -38,7 +38,7 @@ module.exports = {
         }
     },
 
-    async getOneReview(req, res) {
+    async getOneReview(req, res) { // https://localhost:5000/reviews/123
         try {
             const result = await reviewService.getOneReview(req.params.reviewId);
             res.send(result);

@@ -1,11 +1,10 @@
-const express = require('express');
 const toiletService = require('../services/toilets');
 
 module.exports = {
 
     async createToilet(req, res) {
         try {
-            await toiletService.createToilet(req.body);
+            await toiletService.createToilet(req.body.toiletItem, req.file);
             res.send();
         }
         catch (err) {
@@ -16,7 +15,7 @@ module.exports = {
 
     async updateToilet(req, res) {
         try {
-            await toiletService.updateToilet(req.params.toiletId, req.body);
+            await toiletService.updateToilet(req.params.toiletId, req.body.toiletItem, req.file);
             res.send();
         }
         catch (err) {
@@ -25,7 +24,7 @@ module.exports = {
         }
     },
 
-    async getToiletsByQuery(req, res) {   
+    async getToiletsByQuery(req, res) {
         try {
             const results = await toiletService.getToiletsByQuery(req.query);
             res.send(results);

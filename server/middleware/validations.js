@@ -10,7 +10,10 @@ const createReviewSchema = Joi.object({
 const createToiletSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number(),
-    location: Joi.string().required(),
+    city: Joi.string().required(),
+    country: Joi.string().required(),
+    lat: Joi.number(),
+    lng: Joi.number(),
     text: Joi.string(),
     unisex: Joi.string(),
     numCells: Joi.number(),
@@ -25,7 +28,10 @@ const updateReviewSchema = Joi.object({
 const updateToiletSchema = Joi.object({
     name: Joi.string(),
     price: Joi.number(),
-    location: Joi.string(),
+    city: Joi.string(),
+    country: Joi.string(),
+    lat: Joi.number(),
+    lng: Joi.number(),
     text: Joi.string(),
     unisex: Joi.string(),
     numCells: Joi.number(),
@@ -34,18 +40,9 @@ const updateToiletSchema = Joi.object({
 
 
 module.exports = {
-    async validateCreateReviewSchema (req, res, next) {
+    async validateCreateReviewSchema(req, res, next) {
         try {
-            await createReviewSchema.validateAsync({ ...req.body}, { convert: false});
-            return next();
-        }
-        catch (err) {
-            return res.status(400).json(err);
-        }
-    },
-    async validateCreateToiletSchema (req, res, next) {
-        try {
-            await createToiletSchema.validateAsync({ ...req.body}, { convert: false});
+            await createReviewSchema.validateAsync({ ...req.body }, { convert: false });
             return next();
         }
         catch (err) {
@@ -53,9 +50,9 @@ module.exports = {
         }
     },
 
-    async validateUpdateReviewSchema (req, res, next) {
+    async validateUpdateReviewSchema(req, res, next) {
         try {
-            await updateReviewSchema.validateAsync({ ...req.body}, { convert: false});
+            await updateReviewSchema.validateAsync({ ...req.body }, { convert: false });
             return next();
         }
         catch (err) {
@@ -64,14 +61,24 @@ module.exports = {
 
     },
 
-    async validateUpdateToiletSchema (req, res, next) {
+
+    async validateCreateToiletSchema(req, res, next) {
         try {
-            await updateToiletSchema.validateAsync({ ...req.body}, { convert: false});
+            await createToiletSchema.validateAsync({ ...req.body.toiletItem }, { convert: false });
             return next();
         }
         catch (err) {
             return res.status(400).json(err);
         }
+    },
 
+    async validateUpdateToiletSchema(req, res, next) {
+        try {
+            await updateToiletSchema.validateAsync({ ...req.body.toiletItem }, { convert: false });
+            return next();
+        }
+        catch (err) {
+            return res.status(400).json(err);
+        }
     }
 }

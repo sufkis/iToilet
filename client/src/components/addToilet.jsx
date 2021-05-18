@@ -3,90 +3,91 @@ import { processManuelLocation } from "../lib/locationFunc";
 
 const AddToilet = () => {
 
- return (
-     <>
-     <Formik
-     initalValues={{
-         name:"",
-         price:0,
-         street: "",
-         city: "",
-         country: "",
-         lat: 0,
-         lng: 0,
-         unisex: false,
-         numCells: 1,
-         babyChangingStations: false,
-         file: null,
-     }}
-    //  validate={values => {
-    //      const errors = {};
-    //      if (!values.name) errors.name = 'Name is required'
-    //      if (!values.address) errors.address = 'Address is required' 
-    //  }}
-     onSubmit={ async (values, { setSubmitting, resetForm }) => {
-         setSubmitting(true)
-         const formData = new FormData();
-         for (let [key, value] of Object.entries(values)) {
-             formData.append(`${key}`, value)
-         }
-         try {
-            const result = await processManuelLocation(values.street, values.city, values.country)
-            // post the form
-            // push to map
-         } catch(err) {
-             console.error(err)
-         }
-         setSubmitting(false)
-     }}
-     >
-         {({isSubmitting, setFieldValue}) => {
-             return (
-                <div className="container w-50">
-                    <h1>Add a toilet</h1>
-                    <Form className="form-group d-flex flex-column justify-content-center">
-                        <label htmlFor="name">Property name: </label>
-                        <Field type="text" name="name" className="form-control mt-1" />
-                        {/* <ErrorMessage name="name" component="div" /> */}
-                        <label htmlFor="address">Property street address: </label>
-                        <Field type="street" name="name" className="form-control mt-1" />
-                        <label htmlFor="address">Property city: </label>
-                        <Field type="street" name="name" className="form-control mt-1" />
-                        <label htmlFor="address">Property Country: </label>
-                        <Field type="street" name="name" className="form-control mt-1" />
-                        {/* <ErrorMessage name="address" component="div" /> */}
-                        <label htmlFor="price">Price: </label>
-                        <Field type="number" name="price" className="form-control mt-1" />
-                        <div>
-                        Unisex?
-                        <label className="btn btn-info mt-1 " htmlFor="true">
-                        <Field type="checkbox" name="unisex" value="true" className="mt-1" />
-                        Yes
-                        </label>
-                        </div>
-                        <label htmlFor="numCells">Number of cells: </label>
-                        <Field type="number" name="numCells" className="form-control mt-1"/>
-                        <div>
-                        Baby Nursury?
-                        <label className="btn btn-info mt-1" htmlFor="true">
-                        <Field type="checkbox" name="unisex" value="true"/>
-                        Yes
-                        </label>
-                        </div>
-                        <label htmlFor="file">Photo of property: </label>
-                        <input id="file" name="file" type="file" onChange={(e) => {
-                        setFieldValue("file", e.currentTarget.files[0]);
-                        }} className="form-control mt-1" />
-                        <div className="d-flex justify-content-center">
-                            <button type="submit" disabled={isSubmitting} className="btn btn-primary mt-2">Add toilet</button>
-                        </div>
-                    </Form>
-                </div>
-             )
-         }}
-     </Formik>
-     </>
- )
+    return (
+        <Formik
+          initialValues={{ 
+              name: '', 
+              price: 0, 
+              street: '' ,
+              country: '',
+              lat:0,
+              lng:0,
+              unisex: false,
+              numCells:1,
+              babyChangingStations: false,
+            //   file: null,
+            }}
+        //   validationSchema={Yup.object({
+        //     firstName: Yup.string()
+        //       .max(15, 'Must be 15 characters or less')
+        //       .required('Required'),
+        //     lastName: Yup.string()
+        //       .max(20, 'Must be 20 characters or less')
+        //       .required('Required'),
+        //     email: Yup.string().email('Invalid email address').required('Required'),
+        //   })}
+          onSubmit={(values, { setSubmitting }) => {
+            // CREATE NEW FormData and append
+
+            try {
+                // convert address to coords (lat, lng)
+                // submit FormData to server
+                // push to main page
+            } catch(err) {
+                console.error(err)
+            }
+          }}
+        >
+            {({isSubmitting, setFieldValue}) =>
+            <div className="container w-50 d-flex flex-column">
+            <h3>Add new toilet</h3>
+            <Form className="form-group"> 
+            <div>
+            <label htmlFor="name">Property name: </label>
+            <Field name="name" type="text" className="form-control mt-1" />
+            </div>
+
+            <div>
+            <label htmlFor="price">Property price: </label>
+            <Field name="price" type="text" className="form-control mt-1"/>
+            </div>
+            <div>
+            <label htmlFor="street">Street Address: </label>
+            <Field name="street" type="text" className="form-control mt-1"/>
+            </div>
+            <div>
+            <label htmlFor="city">City: </label>
+            <Field name="city" type="text" className="form-control mt-1"/>
+            </div>
+            <div>
+            <label htmlFor="country">Country: </label>
+            <Field name="country" type="text" className="form-control mt-1"/>
+            </div>
+            <div>
+            <label htmlFor="numCells">Number of cells in property: </label>
+            <Field name="numCells" type="number"className="form-control mt-1" />
+            </div>  
+            <div>
+            <label htmlFor="unisex">Unisex 
+            <Field name="unisex" type="checkbox"/>   
+                Yes
+            </label>
+            </div>
+            <div>
+            <label htmlFor="babyChangingStations">Baby nursery? 
+            <Field name="babyChangingStations" type="checkbox" />   
+                Yes
+            </label>
+            </div>
+            <div className="d-flex justify-content-center m-2">
+                <button className="btn btn-primary" disabled={isSubmitting} type="submit">Flush</button>
+            </div>
+          </Form>
+          </div>
+            }
+          
+        </Formik>
+      );
 }
 
 export default AddToilet

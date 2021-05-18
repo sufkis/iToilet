@@ -7,7 +7,7 @@ const ListView = ({ toilets }) => {
 
     const [currentToilets, setToilets] = useState([]);
 
-    const { lat, lng } = useAuth();
+    const { coords } = useAuth();
 
     const opts = {
         yName: 'lat',
@@ -18,8 +18,6 @@ const ListView = ({ toilets }) => {
     useEffect(() => {
         let isMounted = true;
         if (isMounted && toilets.length > 0) {
-            const coords = { lat, lng }
-            console.log(coords);
             setToilets(sortByDistance(coords, toilets, opts))
         }
         return () => isMounted=false;

@@ -10,9 +10,11 @@ const Navigation = () => {
         <>
         <Navbar collapseOnSelect fixed='sticky' expand='sm' bg='dark' variant='dark'>
             <Container>
+            <Navbar.Brand href='/'>iToilet<i className="fas fa-toilet ml-4"></i></Navbar.Brand>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
+                        <Nav.Link href='/'>Find a spot</Nav.Link>
                         <Nav.Link href='/'>Map</Nav.Link>
                         <Nav.Link href='/list'>List view</Nav.Link>
                         {currentUser && <Nav.Link href='/profile'>Profile</Nav.Link>}

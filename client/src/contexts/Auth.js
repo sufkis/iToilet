@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, provider } from '../firebase'
+import localForage from 'localforage'
+import { useHistory } from 'react-router';
 
 const AuthContext = React.createContext();
 
@@ -10,22 +12,25 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
-    const [lat, setLat] = useState(0);
-    const [lng, setLng] = useState(0);
+    const [coords, setCoords] = useState({ lat: 0, lng: 0 })
+    const history = useHistory();
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);
     }
 
     function googleSignIn() {
-        return auth.signInWithPopup(provider);
+        auth.signInWithPopup(provider);
+        history.push('/')
     }
 
     function login(email, password) {
         return auth.signInWithEmailAndPassword(email, password);
     }
 
-    function logout() {
+    async function logout() {
+        setCoords({ lat: 0, lng: 0 })
+        await localForage.removeItem(coords)
         return auth.signOut();
     }
 
@@ -38,13 +43,23 @@ export function AuthProvider({ children }) {
         }
     }
 
-    function showPosition(position) {
+    async function showPosition(position) {
 
         let lat = position.coords.latitude
         let lng = position.coords.longitude
-        setLat(lat);
-        setLng(lng);
+        try {
+            await handleOnPosition(lat, lng)
+        } catch (err) {
+            console.error(err)
+        }
     }
+
+    async function handleOnPosition(lat, lng) {
+        setCoords({ lat: lat, lng: lng })
+        console.log(coords);
+        await localForage.setItem('coords', coords)
+    }
+
 
 
     useEffect(() => {
@@ -52,26 +67,32 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             isMounted && setCurrentUser(user);
             isMounted && setLoading(false);
+            localForage.getItem('coords')
+                .then(userCoords => {
+                    if (userCoords) {
+                        console.log(userCoords)
+                        setCoords(userCoords)
+                    }
+                })
         })
-
         return () => {
             isMounted = false;
             unsubscribe();
         }
     }, [])
 
+
     const context = {
         currentUser,
-        lat,
-        lng,
-        setLng,
-        setLat,
+        coords,
+        setCoords,
         getPosition,
         signup,
         googleSignIn,
         login,
         logout,
     }
+
 
     return ( <
         AuthContext.Provider value = { context } > {!loading && children } <

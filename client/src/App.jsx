@@ -53,7 +53,9 @@ function App() {
           </Route>
           <Route exact path='/'>
             <LocationService setStreet={setStreet} setCity={setCity} setCountry={setCountry} street={street} city={city} country={country} getPosition={getPosition} />
-            <div>map at some point</div>
+          </Route>
+          <Route exact path='/map'>
+            {/* Map Component here */}
           </Route>
           <Route exact path='/list'>
             <ListView toilets={mockToilet} />

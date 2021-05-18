@@ -15,7 +15,6 @@ const Login = () => {
     async function handleGoogleSignIn () {
         try {
             await googleSignIn()
-            history.push('/');
         } catch (err) {
             console.error(err);
         }

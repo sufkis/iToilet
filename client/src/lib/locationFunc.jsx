@@ -2,17 +2,15 @@ import { convertToGoogleCeooding } from "./api";
 
 export async function processManuelLocation(userCity, userCountry) {
 
-    console.log(userCity, userCountry)
 
     if (userCountry !== "" && userCity !== "") {
         const city = userCity;
         const country = userCountry;
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city},+${country}&key=AIzaSyCfQfEo0boyriOF_SwxKA0mboSY3JWUWtw`
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city},+${country}&key=${process.env.REACT_APP_GOOGLE_KEY}`
         try {
             const results = await convertToGoogleCeooding(url)
             if (results.status === "OK") {
                const result = getUserCoords(results.results)
-               console.log(result)
                return result;
             } else {
                 console.log('Please revise location fields and resubmit')

@@ -1,3 +1,4 @@
+import { useHistory } from "react-router";
 import { useAuth } from "../contexts/Auth";
 import { processManuelLocation } from "../lib/locationFunc";
 
@@ -7,14 +8,14 @@ const LocationService = (props) => {
     const { getPosition, street, setStreet, setCity, setCountry, city, country  } = props
 
     const { setLng, setLat, handleOnPosition } = useAuth();
+    const history = useHistory();
 
 
     const handleLocation = async (e) => {
         e.preventDefault();
         const result = await processManuelLocation(city, country);
-
         handleOnPosition(result.lat, result.lng)
-
+        history.push('/map')
     }
 
 

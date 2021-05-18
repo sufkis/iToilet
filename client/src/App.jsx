@@ -46,7 +46,7 @@ function App() {
         <Navigation />
         <Switch>
           <Route exact path='/signup'>
-            <Signup />
+            {/* <Signup /> */}
           </Route>
           <Route exact path='/login'>
             <Login />
@@ -55,7 +55,7 @@ function App() {
             <LocationService setStreet={setStreet} setCity={setCity} setCountry={setCountry} street={street} city={city} country={country} getPosition={getPosition} />
           </Route>
           <Route exact path='/map'>
-            {/* Map Component here */}
+            <Map toilets={mockToilet}/>
           </Route>
           <Route exact path='/list'>
             <ListView toilets={mockToilet} />

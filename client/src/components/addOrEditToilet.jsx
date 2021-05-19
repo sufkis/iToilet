@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { createNewToilet } from "../lib/api";
@@ -18,6 +18,23 @@ const AddOrEditToilet = ({toilet}) => {
     else return false;
   }
 
+  const toStr = (value) => {
+    if (value === true) return 'yes';
+    else return 'no';
+  }
+
+  const MyTextArea = ({label, ...props}) => {
+    // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+    // which we can spread on <input> and alse replace ErrorMessage entirely.
+    const [field, meta] = useField(props);
+    return (
+        <>
+            <label htmlFor={props.id || props.name}>{label}</label>
+            <textarea className="form-control mt-1" {...field} {...props} />
+        </>
+    );
+  };
+
     return (
         <Formik
           initialValues={{ 
@@ -26,6 +43,7 @@ const AddOrEditToilet = ({toilet}) => {
               street: toilet ? toilet.street : '' ,
               city: toilet ? toilet.city : '',
               country: toilet ? toilet.country : '',
+              text: toilet ? toilet.text : '',
               lat: toilet ? toilet.lat : 0,
               lng: toilet ? toilet.lng : 0,
               unisex: toilet ? toBool(toilet.unisex) : false,
@@ -42,15 +60,17 @@ const AddOrEditToilet = ({toilet}) => {
                 values.lat = result.lat;
                 values.lng = result.lng;
 
-                const { name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations} = values;
-                const newToilet = {  name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations }
+                let { name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations} = values;
+                unisex = toStr(unisex)
+                babyChangingStations = toStr(babyChangingStations)
+                const newToilet = {  name, price , street, city, country, lat, lng, numCells, unisex, babyChangingStations }
 
                 const formData = new FormData;
 
                 formData.append('picture', values.file)
 
-                  console.log(newToilet, formData)
-                await createNewToilet(newToilet, formData)
+                console.log(newToilet, formData)
+                await createNewToilet(JSON.stringify(newToilet), formData)
                 setSubmitting(false);
                 // history.push('/main')
             } catch(err) {
@@ -86,7 +106,14 @@ const AddOrEditToilet = ({toilet}) => {
             <div>
             <label htmlFor="numCells">Number of cells in property: </label>
             <Field name="numCells" type="number"className="form-control mt-1" />
-            </div>  
+            </div>
+            <div>
+              <MyTextArea
+              label="Description"
+              name="text"
+              row="3"
+              />
+            </div>
             <div>
             <label htmlFor="unisex">Unisex 
             <Field name="unisex" type="checkbox"/>   

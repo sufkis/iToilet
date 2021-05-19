@@ -44,7 +44,7 @@ const Signup = () => {
             try {
                 const result = await signup(values.email, values.password);
                 const idToMongo = result.user.uid;
-                // REGISTER TO MONGO HERE
+                // REGISTER TO MONGO
                 history.push('/');
 
             } catch(err) {

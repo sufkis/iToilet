@@ -4,6 +4,10 @@ const Baseurl = process.env.REACT_APP_SERVER_URL
 
 // LAT LNG conversion
 
+const headers = {
+   headeres: 'Content-Type: multipart/form-data'
+}
+
 export async function convertToGoogleCeooding(street, city, country) {
 
     const url = `https:/maps.googleapis.com/maps/api/geocode/json?address=+${street},${city},+${country}&key=${process.env.REACT_APP_GOOGLE_KEY}`
@@ -54,7 +58,7 @@ export async function deleteReview(reviewId) {
 
 export async function createNewToilet(toiletItem, file) {
     // TODO
-    const response = await axios.post(`http://${Baseurl}/toilets/`, toiletItem, file)
+    const response = await axios.post(`http://${Baseurl}/toilets/`, toiletItem, file, { headers: { "Content-Type": "multipart/form-data" }})
     return response.data;
 }
 

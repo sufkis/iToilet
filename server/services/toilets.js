@@ -4,8 +4,6 @@ const { Toilet } = require('../models/toilets');
 const cloudinary = require('../lib/cloudinary');
 const fs = require('fs');
 
-
-
 const collectionName = "toilets";
 const dbName = process.env.DATABASENAME;
 

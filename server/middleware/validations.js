@@ -61,7 +61,6 @@ module.exports = {
 
     },
 
-
     async validateCreateToiletSchema(req, res, next) {
         try {
             await createToiletSchema.validateAsync({ ...req.body.toiletItem }, { convert: false });

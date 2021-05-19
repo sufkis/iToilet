@@ -7,13 +7,12 @@ cloudinary.config({
 });
 
 module.exports = {
-  uploadToCloudinary(filePath) { 
+  uploadToCloudinary(filePath) {
     return new Promise((resolve, reject) => {
       cloudinary.uploader.upload(filePath, (error, result) => {
         if (error) reject(error);
         else resolve(result);
       });
     })
-   }
+  }
 }
- 

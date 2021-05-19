@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import toiletIcon from "./toilet.png";
 import { useAuth } from "./contexts/Auth";
 import Marker from "./components/marker";
+import { getToiletsByLocation } from "./lib/api";
 
 function Map(props) {
-  const { toilets } = props;
-  // const Marker = ({ text }) => <div> <i className="fas fa-map-marker text-primary"></i>{text} </div>;
-  let userLat = 32.722124799999996;
-  let userLng = 35.2485376;
+  const [toilets, setToilets] = useState([]);
 
   const { coords } = useAuth();
 
   const { lat, lng} = coords
 
-  console.log(lat, lng);
+  console.log(coords);
 
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted && coords) {
+      getToiletsByLocation()
+      .then(toilets => {
+        setToilets([...toilets])
+      })
+    }
+    return () => isMounted = false;
+  }, [])
+
+  console.log(toilets)
   return (
     <div style={{ height: 777, width:375}}>
       <GoogleMapReact
@@ -28,9 +38,7 @@ function Map(props) {
             <Marker
               lat={toilet.lat}
               lng={toilet.lng}
-              text={toilet.text}
-              href={toiletIcon}
-              key={i}
+              key={toilet._id}
               toilet={toilet}
             ></Marker>
           );

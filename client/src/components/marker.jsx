@@ -5,6 +5,9 @@ import ListItem from './listItem';
 
 const Marker = (props) => {
 
+    const { toilet } = props;
+
+
     const [open, setOpen] = useState(false);
 
     const onOpenModal = () => setOpen(true);
@@ -14,10 +17,10 @@ const Marker = (props) => {
         <>
         <div onClick={onOpenModal} style={{cursor: 'pointer'}}>
             <i className="fas fa-map-marker text-primary"></i>
-            <div>{props.text}</div>
+            <div>{toilet.name}</div>
         </div>
         <Modal  open={open} onClose={onCloseModal} center>
-            <ListItem toilet={props.toilet} />
+            <ListItem toilet={toilet} />
         </Modal>
         </>
     )

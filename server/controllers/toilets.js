@@ -5,9 +5,8 @@ module.exports = {
     async createToilet(req, res) {
         try {
             await toiletService.createToilet(req.body.toiletItem, req.file);
-            res.send();
-        }
-        catch (err) {
+            res.send({ message: "toilet added successfully" });
+        } catch (err) {
             console.log(err);
             res.status(500).send({ message: err.message });
         }
@@ -17,8 +16,7 @@ module.exports = {
         try {
             await toiletService.updateToilet(req.params.toiletId, req.body.toiletItem, req.file);
             res.send();
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
             res.status(500).send({ message: err.message });
         }
@@ -26,10 +24,10 @@ module.exports = {
 
     async getToiletsByQuery(req, res) {
         try {
+            console.log(req.body)
             const results = await toiletService.getToiletsByQuery(req.query);
             res.send(results);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
             res.status(500).send({ message: err.message });
         }
@@ -39,8 +37,7 @@ module.exports = {
         try {
             const result = await toiletService.getOneToilet(req.params.toiletId);
             res.send(result);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
             res.status(500).send({ message: err.message });
         }

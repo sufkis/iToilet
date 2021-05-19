@@ -42,7 +42,9 @@ const Signup = () => {
         onSubmit={ async (values, { setSubmitting }) => {
             setSubmitting(true)
             try {
-                await signup(values.email, values.password);
+                const result = await signup(values.email, values.password);
+                const idToMongo = result.user.uid;
+                // REGISTER TO MONGO HERE
                 history.push('/');
 
             } catch(err) {

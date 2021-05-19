@@ -38,7 +38,7 @@ const AddOrEditToilet = ({toilet}) => {
 
             try {
                 setSubmitting(true)
-                const result = await processManuelLocation(street, city, country);
+                const result = await processManuelLocation(values.street, values.city, values.country);
                 values.lat = result.lat;
                 values.lng = result.lng;
 
@@ -47,11 +47,12 @@ const AddOrEditToilet = ({toilet}) => {
 
                 const formData = new FormData;
 
-                formdData.append('photo', values.file)
+                formData.append('picture', values.file)
 
-                await createNewToilet(newToilet, formdData)
+                  console.log(newToilet, formData)
+                await createNewToilet(newToilet, formData)
                 setSubmitting(false);
-                history.push('/main')
+                // history.push('/main')
             } catch(err) {
                 console.error(err)
             }

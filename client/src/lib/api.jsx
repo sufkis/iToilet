@@ -24,13 +24,13 @@ export async function signUpRegistration(newUser) {
 //  CUSTOMER FUNCTIONS
 
 export async function getToiletsByLocation(query) {
-    const response = await axios.get(`http:/${Baseurl}}/toilets/`, query)
+    const response = await axios.get(`http://${Baseurl}/toilets`, query)
     return response.data;
 
 }
 
 export async function getOneToilet(query) {
-    const response = await axios.get(`http:/${Baseurl}/toilets/`, query)
+    const response = await axios.get(`http://${Baseurl}/toilets/`, query)
     return response.data;
 }
 

@@ -1,10 +1,10 @@
 const path = require('path');
 const result = require('dotenv').config({
-  path: path.join(__dirname, `./.env.${process.env.NODE_ENV}`),
+    path: path.join(__dirname, `./.env.${process.env.NODE_ENV}`),
 });
 
 if (result.error) {
-  throw new Error(result.error);
+    throw new Error(result.error);
 }
 
 const express = require('express');
@@ -35,4 +35,4 @@ mongoose.connect(process.env.MONGO_URI, {
     app.listen(PORT, HOST, () => console.log(`Server running on port ${PORT}`))
 ).catch((error) => console.log(error));
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);

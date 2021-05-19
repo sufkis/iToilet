@@ -1,15 +1,15 @@
 import './App.css';
-import Signup from './components/signup';
 import { useAuth } from "./contexts/Auth"
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import ListView from './components/listView';
 import LocationService from './components/locationService';
-import Login from './components/login';
 import Navigation from './components/navbar';
 import Map from './Map';
-import AddToilet from './components/addToilet';
 import PrivateRoute from './components/privateRoute';
-import Welcome from './lib/welcome';
+import Welcome from './components/welcome'
+import AddOrEditToilet from './components/addOrEditToilet';
+import Review from './components/review';
+import Profile from './components/profile';
 
 const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
@@ -25,7 +25,6 @@ const mockToilet = [
   {id: 'jkrh23f', lat: 32.053360328714675, lng: 34.75639650165063, text: "Shaffa Bar" ,href: {toiletIcon}, isPublic: false},
 ]
 
-// const myMockLocation = {lat: 32.06342, lng: 34.773181 }
 function App() {
 
   const { currentUser } = useAuth();
@@ -38,7 +37,7 @@ function App() {
         <Switch>
           <Route exact path='/'>
             {currentUser && <Redirect to='/main' />}
-            {!currentUser && <Welcome />}
+            {!currentUser && <Welcome /> }
           </Route>
           <PrivateRoute exact path='/main'>
             <LocationService />
@@ -49,8 +48,14 @@ function App() {
           <PrivateRoute exact path='/list'>
             <ListView toilets={mockToilet} />
           </PrivateRoute>
+          <PrivateRoute exact path='/review'>
+            <Review />
+          </PrivateRoute>
+          <PrivateRoute exact path='/profile'>
+            <Profile />
+          </PrivateRoute>
           <PrivateRoute exact path='/addToilet'>
-            <AddToilet />
+            <AddOrEditToilet />
           </PrivateRoute>
         </Switch>
       </Router>

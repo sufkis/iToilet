@@ -1,13 +1,14 @@
 import { convertToGoogleCeooding } from "./api";
 
-export async function processManuelLocation(userCity, userCountry) {
+export async function processManuelLocation(userStreet, userCity, userCountry) {
 
 
     if (userCountry !== "" && userCity !== "") {
+        const street = userStreet;
         const city = userCity;
         const country = userCountry;
         try {
-            const results = await convertToGoogleCeooding(city, country)
+            const results = await convertToGoogleCeooding(street, city, country)
             if (results.status === "OK") {
                const result = getUserCoords(results.results)
                return result;

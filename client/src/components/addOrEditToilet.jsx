@@ -45,7 +45,11 @@ const AddOrEditToilet = ({toilet}) => {
                 const { name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations} = values;
                 const newToilet = {  name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations }
 
-                await createNewToilet(newToilet, values.file)
+                const formData = new FormData;
+
+                formdData.append('photo', values.file)
+
+                await createNewToilet(newToilet, formdData)
                 setSubmitting(false);
                 history.push('/main')
             } catch(err) {

@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const dbConnected = MongoClient.connect(process.env.MONGODBCONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+const dbConnected = MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
                                .catch( err => { console.log(err);  });
 
 module.exports = {

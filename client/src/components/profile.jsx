@@ -6,7 +6,13 @@ const Profile = () => {
 
     const auth = useAuth();
     const { currentUser } = auth;
-    const name = currentUser.displayName.split(' ');
+    const [name, setName] = useState([]);
+    console.log(currentUser);
+
+    if (currentUser.displayName !== null) {
+        const userName = currentUser.displayName.split(' ');
+        setName(userName)
+    }
 
     const [inEdit, setInEdit] = useState();
     const [message, setMessage] = useState();
@@ -14,8 +20,8 @@ const Profile = () => {
         <>
         <Formik
         initialValues={{
-            firstName: name[0],
-            lastName: name[1],
+            firstName: name ? name[0] : '',
+            lastName: name ? name[1]: '',
             email: currentUser.email,
             password: '',
         }}

@@ -1,11 +1,12 @@
 const toiletService = require('../services/toilets');
-
+const fs = require('fs');
 module.exports = {
 
     async createToilet(req, res) {
         try {
             await toiletService.createToilet(req.body.toiletItem, req.file);
             res.send({ message: "toilet added successfully" });
+            fs.unlinkSync(req.file.path);
         } catch (err) {
             console.log(err);
             res.status(500).send({ message: err.message });

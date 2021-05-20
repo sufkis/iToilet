@@ -26,6 +26,7 @@ const LocationService = (props) => {
         e.preventDefault();
         setLoading(true)
         const result = await processManuelLocation(street, city, country);
+        console.log(result.lat, result.lng)
         handleOnPosition(result.lat, result.lng)
         history.push('/map')
         setLoading(false);

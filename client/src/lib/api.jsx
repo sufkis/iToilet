@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Baseurl = `itc-itoilet.herokuapp.com`
+const Baseurl = process.env.REACT_APP_SERVER_URL
 
 // LAT LNG conversion
 

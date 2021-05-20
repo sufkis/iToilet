@@ -28,6 +28,8 @@ export async function processManuelLocation(userStreet, userCity, userCountry) {
 function getUserCoords(googleRes) {
     let lat = googleRes[0].geometry.location.lat;
     let lng = googleRes[0].geometry.location.lng;
+
+    console.log(lat, lng)
     
     return ({lat, lng})
   }

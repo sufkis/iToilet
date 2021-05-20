@@ -21,11 +21,6 @@ const signIn = async (req, res) => {
         .status(400)
         .json({ message: "Email or Password are incorrect" });
 
-    const token = jwt.sign(
-      { email: existentUser.email, id: existentUser._id },
-      "test",
-      { expiresIn: "2h" }
-    );
 
     res.status(200).json({ result: existentUser, token });
   } catch (error) {
@@ -53,9 +48,6 @@ const signUp = async (req, res) => {
       name: `${firstName} ${lastName}`,
     });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, "test", {
-      expiresIn: "2h",
-    });
 
     res.status(200).json({ result, token });
   } catch (error) {

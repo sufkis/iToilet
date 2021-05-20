@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import toiletIcon from "./toilet.png";
 import { useAuth } from "./contexts/Auth";
 import Marker from "./components/marker";
 import { getToiletsByLocation } from "./lib/api";
 
 function Map(props) {
-  const [toilets, setToilets] = useState([]);
 
   const { coords } = useAuth();
+
+
+  const { toilets, setToilets } = props;
 
   const { lat, lng} = coords
 
@@ -25,11 +26,10 @@ function Map(props) {
     return () => isMounted = false;
   }, [])
 
-  console.log(toilets)
   return (
     <div style={{ height: 777, width:375}}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: `AIzaSyCfQfEo0boyriOF_SwxKA0mboSY3JWUWtw` }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
         defaultCenter={{ lat: lat, lng: lng }}
         defaultZoom={15}
       >

@@ -3,8 +3,7 @@ module.exports = {
         try {
             req.body.toiletItem = JSON.parse(req.body.toiletItem);
             return next();
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(400).json(err);
         }
     }

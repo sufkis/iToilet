@@ -7,7 +7,7 @@ import { processManuelLocation } from "../lib/locationFunc";
 const AddOrEditToilet = ({toilet}) => {
 
   const history = useHistory();
-  const [inEdit, setInEdit] = useState(true);
+  const [inEdit, setInEdit] = useState(false);
 
   if (toilet) {
     setInEdit(true)
@@ -60,19 +60,21 @@ const AddOrEditToilet = ({toilet}) => {
                 values.lat = result.lat;
                 values.lng = result.lng;
 
-                let { name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations} = values;
+                let { name, price , street, city, country, lat, lng, unisex, numCells, babyChangingStations, text} = values;
                 unisex = toStr(unisex)
                 babyChangingStations = toStr(babyChangingStations)
-                const newToilet = {  name, price , street, city, country, lat, lng, numCells, unisex, babyChangingStations }
+
+                let newToilet = {  name, price , city, country, lat, lng, numCells, unisex, babyChangingStations, text }
 
                 const formData = new FormData;
 
+                console.log(values.file)
                 formData.append('picture', values.file)
-
-                console.log(newToilet, formData)
-                await createNewToilet(JSON.stringify(newToilet), formData)
+                formData.append('toiletItem', JSON.stringify(newToilet))
+                 
+                await createNewToilet(formData)
                 setSubmitting(false);
-                // history.push('/main')
+                history.push('/main')
             } catch(err) {
                 console.error(err)
             }
@@ -139,7 +141,11 @@ const AddOrEditToilet = ({toilet}) => {
             </div>
             </div>
             <div className="d-flex justify-content-center m-2">
-                <button className="btn btn-primary" disabled={isSubmitting} type="submit">{inEdit ? 'Flush again' : 'Flush'}</button>
+                {!isSubmitting && <button className="btn btn-primary" type="submit">{inEdit ? 'Flush again' : 'Flush'}</button>}
+                {isSubmitting && <button className="btn btn-primary" disabled>
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Flushing...
+                </button>}
             </div>
           </Form>
           </div>

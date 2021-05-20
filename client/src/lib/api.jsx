@@ -38,6 +38,12 @@ export async function getOneToilet(query) {
     return response.data;
 }
 
+export async function getToiletReview(toiletId) {
+    const response = await axios.get(`http://${Baseurl}/reviews/${toiletId}`);
+    return response.data;
+
+}
+
 export async function createNewReview(review) {
     const response = await axios.post(`http://${Baseurl}/reviews/`, review)
     return response;
@@ -53,12 +59,12 @@ export async function deleteReview(reviewId) {
     return response.data;
 }
 
-
+// { headers: { "Content-Type": "multipart/form-data" }}
 // PROVIDER FUNCTION
 
-export async function createNewToilet(toiletItem, file) {
+export async function createNewToilet(toiletItem) {
     // TODO
-    const response = await axios.post(`http://${Baseurl}/toilets/`, toiletItem, file, { headers: { "Content-Type": "multipart/form-data" }})
+    const response = await axios.post(`http://${Baseurl}/toilets/`, toiletItem, { headers: { "Content-Type": "multipart/form-data" }})
     return response.data;
 }
 

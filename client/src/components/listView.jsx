@@ -3,23 +3,24 @@ import sortByDistance from 'sort-by-distance';
 import { useAuth } from '../contexts/Auth';
 import ListItem from './listItem';
 
-const ListView = ({ toilets }) => {
+const ListView = (props) => {
 
-    const [currentToilets, setToilets] = useState([]);
 
     const { coords } = useAuth();
+
+    const { toilets, setToilets}  = props
 
     const opts = {
         yName: 'lat',
         xName: 'lng'
     }
 
-    console.log( coords )
 
     useEffect(() => {
         let isMounted = true;
         if (isMounted && toilets.length > 0) {
             setToilets(sortByDistance(coords, toilets, opts))
+            console.log(toilets)
         }
         return () => isMounted=false;
     }, [coords])
@@ -27,9 +28,9 @@ const ListView = ({ toilets }) => {
     return (
         <>
         <ul className="card-group">
-            {currentToilets.map((toilet, index) => {
+            {toilets.map((toilet, index) => {
                 return(
-                    <ListItem key={toilet.id} toilet={toilet} />
+                    <ListItem key={toilet._id} toilet={toilet} />
                 )
             })}
         </ul>

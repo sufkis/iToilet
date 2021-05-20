@@ -42,20 +42,18 @@ const updateToiletSchema = Joi.object({
 module.exports = {
     async validateCreateReviewSchema(req, res, next) {
         try {
-            await createReviewSchema.validateAsync({ ...req.body }, { convert: false });
+            await createReviewSchema.validateAsync({...req.body }, { convert: false });
             return next();
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(400).json(err);
         }
     },
 
     async validateUpdateReviewSchema(req, res, next) {
         try {
-            await updateReviewSchema.validateAsync({ ...req.body }, { convert: false });
+            await updateReviewSchema.validateAsync({...req.body }, { convert: false });
             return next();
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(400).json(err);
         }
 
@@ -63,20 +61,19 @@ module.exports = {
 
     async validateCreateToiletSchema(req, res, next) {
         try {
-            await createToiletSchema.validateAsync({ ...req.body.toiletItem }, { convert: false });
+            console.log(req.body)
+            await createToiletSchema.validateAsync({...req.body }, { convert: false });
             return next();
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(400).json(err);
         }
     },
 
     async validateUpdateToiletSchema(req, res, next) {
         try {
-            await updateToiletSchema.validateAsync({ ...req.body.toiletItem }, { convert: false });
+            await updateToiletSchema.validateAsync({...req.body.toiletItem }, { convert: false });
             return next();
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(400).json(err);
         }
     }

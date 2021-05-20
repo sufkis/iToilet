@@ -10,8 +10,9 @@ import Welcome from './components/welcome'
 import AddOrEditToilet from './components/addOrEditToilet';
 import Review from './components/review';
 import Profile from './components/profile';
+import toiletIcon from './toilet.png'
+import { useState } from 'react';
 
-const toiletIcon = 'https://pngtree.com/freepng/public-toilet-icon-cartoon_4478446.html'
 
 const mockToilet = [
   {id: '123', lat: 32.081902599570284, lng: 34.78146508564525, text: "Ibn Gvirol 69", href: {toiletIcon}, isPublic: true},
@@ -30,6 +31,8 @@ function App() {
   const { currentUser } = useAuth();
 
 
+  const [toilets, setToilets] = useState([]);
+
   return (
     <>
       <Router>
@@ -43,10 +46,10 @@ function App() {
             <LocationService />
           </PrivateRoute>
           <PrivateRoute exact path='/map'>
-            <Map toilets={mockToilet}/>
+            <Map toilets={toilets} setToilets={setToilets}/>
           </PrivateRoute>
           <PrivateRoute exact path='/list'>
-            <ListView toilets={mockToilet} />
+            <ListView toilets={toilets} setToilets={setToilets}/>
           </PrivateRoute>
           <PrivateRoute exact path='/review'>
             <Review />
